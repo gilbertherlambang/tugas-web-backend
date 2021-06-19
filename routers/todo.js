@@ -5,20 +5,20 @@ const con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "tugas-web"
+    database: "pasarsenin"
 })
 
 con.connect(function (err) {
     if (err) throw err
 })
 
-router.get('/', function (req, res) {
-    res.send('<form method="post" action="/todo"><input id="task" name="task" style="margin-right:10px;"><input type="submit"></form>')
-})
+// router.get('/', function (req, res) {
+//     res.send('<form method="post" action="/todo"><input id="todo" name="todo" style="margin-right:10px;"><input type="submit"></form>')
+// })
 
-router.post('/todo', function (req, res) {
+router.post('/', function (req, res) {
     console.log(req.body)
-    const sql = "INSERT INTO task(task) VALUES('" + req.body.task + "')"
+    const sql = "INSERT INTO todo(todo) VALUES('" + req.body.todo + "')"
     con.query(sql, function (err) {
         if (err) throw err
         console.log("1 record inserted")
@@ -26,8 +26,8 @@ router.post('/todo', function (req, res) {
     res.end()
 })
 
-router.delete('/todo/:id', function (req, res) {
-    const sql = "DELETE FROM task WHERE id = " + req.params.id
+router.delete('/:id', function (req, res) {
+    const sql = "DELETE FROM todo WHERE id = " + req.params.id
     con.query(sql, function (err) {
         if (err) throw err
         console.log("1 record deleted")
@@ -35,8 +35,8 @@ router.delete('/todo/:id', function (req, res) {
     res.end()
 })
 
-router.get('/todo', function (req, res) {
-    const sql = "SELECT * FROM task"
+router.get('/', function (req, res) {
+    const sql = "SELECT * FROM todo"
     con.query(sql, function (err, result) {
         if (err) throw err
         // res.send(result.map(item => "<div>" + item.task + "</div>").join(""))
